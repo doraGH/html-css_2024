@@ -1,0 +1,59 @@
+@use "sass:math";
+// 變數
+@use "../mixin/variable" as vars;
+// Mixin
+@use "../mixin/mixin";
+
+/**!
+ * * 頁籤切換內容
+ */
+.tab-head {
+  position: relative;
+  z-index: 2;
+  padding: 0;
+  margin: 0 auto var(--gap);
+  gap: 0 var(--gap);
+  display: flex;
+  flex-wrap: wrap;
+  &:not(.is-scroll-active) {
+    text-align: center;
+  }
+  &.text-center {
+    justify-content: center;
+  }
+}
+.tab-link {
+  min-width: 120px;
+  display: inline-block;
+  line-height: var(--h-btn);
+  padding: 0 0 2px 0;
+  border-radius: 4px;
+  color: #444;
+  border: 1px solid var(--border-main);
+  background-color: #fff;
+  white-space: nowrap;
+  text-align: center;
+  transition: color 0.15s, background-color 0.15s;
+  &:hover, &:active {
+    color: #222;
+    background-color: rgb(0 0 0 / 5%);
+  }
+  &.active {
+    color: #fff;
+    background-color: var(--color-main);
+    &:hover, &:active {
+      color: #fff;
+      background-color: var(--color-main);
+    }
+  }
+}
+.tab-body {
+  position: relative;
+  z-index: 9;
+}
+.tab-content {
+  display: none;
+  &.active {
+    display: block;
+  }
+}

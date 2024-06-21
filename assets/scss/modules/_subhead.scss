@@ -1,0 +1,31 @@
+@use "sass:math";
+// 變數
+@use "../mixin/variable" as vars;
+// Mixin
+@use "../mixin/mixin";
+
+/* 
+ * Section Subhead
+ */
+.subhead {
+  display: block;
+  font-size: var(--fs-subhead-sm);
+  color: #000;
+  line-height: 1.1;
+  padding: 0;
+  margin: 0 0 1em;
+  font-weight: 400;
+  font-family: var(--ff-en);
+  .en {
+    display: block;
+    color: var(--color-main);
+    font-weight: 700;
+    line-height: 0.9;
+    text-transform: uppercase;
+    font-size: var(--fs-subhead-lg);
+  }
+  .zh {
+    display: block;
+    margin-top: 0.2em;
+  }
+}

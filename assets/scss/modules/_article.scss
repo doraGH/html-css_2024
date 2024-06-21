@@ -1,0 +1,63 @@
+@use "sass:math";
+// 變數
+@use "../mixin/variable" as vars;
+// Mixin
+@use "../mixin/mixin";
+
+/* 
+ * Articles
+ */
+.article-head {
+  border-bottom: 1px solid #000;
+  padding: 0 0 max(15px, 2.5vh) 0;
+  margin: 0 auto;
+  .tags {
+    margin-bottom: 10px;
+    display: block;
+  }
+  .tag {
+    font-size: calc(var(--fs-def) * 0.875);
+  }
+  .cate {
+    font-family: var(--ff-en);
+    font-size: calc(var(--fs-def) * 0.875);
+    color: #fff;
+    border: none;
+    display: inline-block;
+    font-style: normal;
+    margin-right: 5px;
+    line-height: 1.4;
+    border-radius: 4px;
+    background-color: var(--color-main);
+  }
+  .date {
+    font-family: var(--ff-en);
+    font-size: var(--fs-def);
+    color: var(--color-main);
+    font-style: normal;
+    font-weight: 500;
+  }
+  .tags.course {
+    .cate {
+      background-color: var(--color-second2);
+    }
+    .date {
+      color: var(--color-second2);
+    }
+  }
+}
+.article-title {
+  font-size: var(--fs-h1);
+  line-height: 1.5;
+  font-weight: 500;
+  display: block;
+  margin: 0;
+  padding: 0;
+  color: #000;
+}
+.article-foot {
+  border-top: 1px solid #000;
+  padding-top: max(20px, 4vh);
+  padding-bottom: max(20px, 4vh);
+  text-align: center;
+}

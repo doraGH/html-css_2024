@@ -1,0 +1,72 @@
+@use "sass:math";
+// 變數
+@use "../mixin/variable" as vars;
+// Mixin
+@use "../mixin/mixin";
+
+/* 
+ * Button
+ */
+.button {
+  border: none;
+  display: inline-block;
+  font-size: var(--fs-btn);
+  width: 170px;
+  height: var(--h-btn);
+  line-height: var(--h-btn);
+  border-radius: 4px;
+  background-color: var(--color-primary);
+  color: #fff;
+  white-space: nowrap;
+  text-align: center;
+  transition: color 0.15s, background-color 0.15s;
+}
+.pc .button {
+  &:hover {
+    background-color: var(--color-secondary);
+    color: #fff;
+  }
+}
+
+.button-wrap {
+  text-align: center;
+  padding: var(--gap) 0;
+  .button {
+    margin: 0 auto;
+    width: 230px;
+  }
+}
+@media (max-width: 579px) {
+  .button-wrap {
+    padding: 0;
+    .button {
+      width: 100%;
+    }
+  }
+}
+
+.button-round {
+  display: inline-block;
+  font-size: calc(var(--fs-def) * 0.875);
+  height: var(--h-btn);
+  line-height: var(--h-btn);
+  border-radius: 50px;
+  background-color: var(--color-main);
+  color: #fff;
+  padding: 0 1em 0 0.8em;
+  white-space: nowrap;
+  text-align: center;
+  transition: color 0.15s, background-color 0.15s;
+  svg {
+    max-width: 1.5em;
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: -0.25em;
+  }
+}
+.pc .button-round {
+  &:hover {
+    background-color: var(--color-main2);
+    color: #fff;
+  }
+}

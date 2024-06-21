@@ -1,0 +1,26 @@
+@use "sass:math";
+// 變數
+@use "../mixin/variable" as vars;
+// Mixin
+@use "../mixin/mixin";
+
+/* 
+ * Container
+ */
+.w-container {
+  width: 100%;
+  max-width: calc(var(--w-container) + var(--gap) * 2);
+  margin: 0 auto;
+  padding: 0 var(--gap);
+}
+
+// .mainwrap {
+//   padding-top: var(--gap-v);
+//   padding-bottom: var(--gap-v);
+//   &.no-pt {
+//     padding-top: 0;
+//   }
+//   &.no-pb {
+//     padding-bottom: 0;
+//   }
+// }

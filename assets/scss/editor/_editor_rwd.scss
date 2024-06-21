@@ -1,0 +1,68 @@
+@use "sass:math";
+// 變數
+@use "../mixin/variable" as vars;
+// Mixin
+@use "../mixin/mixin";
+
+/* 
+ * 編輯器RWD
+ */
+@media (max-width: 767px) {
+  .theme-columns {
+    &:not(.col-3) {
+      display: block;
+    }
+  }
+  .theme-table-two-col {
+    thead {
+      display: none;
+    }
+    tbody {
+      display: block;
+      width: 100%;
+      td, th {
+        display: block;
+        width: 100%;
+        min-width: 100%;
+        padding: 15px 10px;
+        text-align: left!important;
+      }
+      th {
+        padding-top: 8px;
+        padding-bottom: 8px;
+      }
+      tr {
+        @include mixin.do-under('.pc') {
+          &:hover {
+            background-color: #fff;
+          }
+        }
+      }
+    }
+    tr {
+      display: block;
+      border-top: 3px solid rgb(0 0 0 / 20%);
+    }
+  }
+}
+@media (max-width: 639px) {
+  .theme-columns {
+    &.col-3 {
+      display: block;
+      > * {
+        display: flex;
+      }
+      .img {
+        flex: 0 0 200px;
+        align-self: stretch;
+        margin-bottom: 0;
+        img {
+          height: 100%;
+        }
+      }
+      .text {
+        padding-left: 25px;
+      }
+    }
+  }
+}

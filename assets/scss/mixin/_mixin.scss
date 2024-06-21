@@ -1,0 +1,129 @@
+@use "sass:math";
+@use "sass:color";
+
+// 使用範例,需在前面加入mixin. 做串接: @include mixin.pseudo-ele;
+
+@mixin pseudo-ele {
+  display: block;
+  content: "";
+  width: 100%;
+}
+
+// 指定的父層樣式下才執行 (常用在判別裝置，則需要mobiledetect)
+// 使用範例：.class { @include mixin.do-under('.pc') { &:hover {...} } }
+// 編譯結果: .pc .class:hover {...}
+@mixin do-under($classname) {
+  @at-root #{$classname} & {
+    @content;
+  }
+}
+
+// 漸層
+// 使用範例：.class { @include mixin.gradient((#f1bb08,#f3981e), 'vertical') }
+@mixin gradient( $colors:(#f1bb08,#f3981e), $orientation: 'horizontal') {
+  background: $colors;
+  @if $orientation == 'vertical' {    /* Vertical gradient */
+    background: linear-gradient(to bottom, $colors);
+  }  @else if $orientation == 'horizontal' {    /* Horizontal gradient */
+    background: linear-gradient(to right, $colors);
+  }  @else if $orientation == 'radial' {    /* Radial gradient */
+    background: radial-gradient(ellipse at center, $colors);
+  }  @else {    /* Other Angel */
+    background: linear-gradient($orientation, $colors);
+  }
+}
+
+// 文字漸層
+// 使用範例：.class { @include mixin.text-gradient() }
+@mixin text-gradient() {
+  background: linear-gradient(90deg, #de2126, #ed9027);
+  background-position-x: 100%!important;
+  background-size: 100%!important;
+  background-clip: text!important;
+  -webkit-background-clip: text!important;
+  color: transparent!important;
+}
+
+
+// Logo (圖寬，圖高，圖路徑)
+// 所下dom需要有子層<div class="logo"><div></div></div>
+// 使用範例：.logo { @include mixin.logo-img ( 238,  70, '../images/logo.png') }
+@mixin logo-img ($logo-w: 238, $logo-h: 70, $logo-url:'../images/logo.png') {
+  margin: 0;
+  padding: 0;
+  width: #{$logo-w}px;
+  > * {
+    display: block;
+    position: relative;
+    width: 100%;
+    padding-bottom: math.div($logo-h , $logo-w) * 100%;
+    font-size: 0;
+    background: url($logo-url) no-repeat 0 0 / contain;
+    z-index: 0;
+  }
+}
+
+
+// 隱藏元素
+// 使用範例：input[type="checkbox"] { @include mixin.hidden-elem() }
+@mixin hidden-elem() {
+  outline: none;
+  z-index: -100 !important;
+  width: 1px !important;
+  height: 1px !important;
+  clip: rect(1px, 1px, 1px, 1px);
+  position: absolute;
+  opacity: 0;
+  appearance: none;
+}
+
+// 隱藏元素2
+// 使用範例：input[type="checkbox"] { @include mixin.sr-only() }
+@mixin sr-only() {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+// SVG inline in CSS
+// 使用範例：background-image: mixin.svg-url('<svg...></svg>');
+@function svg-url($svg) {
+  @if not str-index($svg,xmlns) {
+    $svg: str-replace($svg, '<svg','<svg xmlns="http://www.w3.org/2000/svg"');
+  }
+
+  $encoded: '';
+  $slice: 2000;
+  $index: 0;
+  $divtemp: math.div( str-length($svg), $slice);
+  $loops: math.ceil($divtemp);
+  @for $i from 1 through $loops {
+    $chunk: str-slice($svg, $index, $index + $slice - 1);
+    $chunk: str-replace($chunk,'"', '\'');
+    $chunk: str-replace($chunk,'%', '%25');
+    $chunk: str-replace($chunk,'&', '%26');
+    $chunk: str-replace($chunk,'#', '%23');
+    $chunk: str-replace($chunk,'{', '%7B');
+    $chunk: str-replace($chunk,'}', '%7D');
+    $chunk: str-replace($chunk,'<', '%3C');
+    $chunk: str-replace($chunk,'>', '%3E');
+
+    $encoded: #{$encoded}#{$chunk};
+    $index: $index + $slice;
+  }
+
+  @return url("data:image/svg+xml,#{$encoded}");
+}
+@function str-replace($string, $search, $replace: '') {
+  $index: str_index($string, $search);
+  @if $index {
+    @return str_slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+  }
+  @return $string;
+}

@@ -1,0 +1,164 @@
+@use "../mixin/_variable" as vars; // 變數
+@use "../mixin/mixin";
+
+/* 
+ * PLUGIN: Swiper
+ */
+ .swiper-dots  {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  top: auto;
+  bottom: auto;
+  right: auto;
+  left: auto;
+  margin: 0;
+  padding: 0 30px;
+  color: #555;
+  font-size: 18px;
+  min-width: 200px;
+  .gap {
+    margin: 0 20px;
+  }
+}
+.swiper-button {
+  display: block;
+  cursor: pointer;
+  position: relative;
+  top: auto;
+  bottom: auto;
+  right: auto;
+  left: auto;
+  margin: 0;
+  padding: 0;
+  flex: 0 0 55px;
+  width: 55px;
+  height: 55px;
+  font-size: 0;
+  line-height: 0;
+  border: 1px solid #010101;
+  border-radius: 50%;
+  transition: all .5s;
+  &::before {
+    pointer-events: none;
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -6px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 6px 6px 6px 0;
+    border-color: transparent #010101 transparent transparent;
+  }
+  &.swiper-prev {
+    &::before {
+      margin-left: -4px;
+    }
+  }
+  &.swiper-next {
+    &::before {
+      margin-left: -2px;
+      transform: scale(-1)
+    }
+  }
+  &:hover {
+    background: transparent;
+  }
+  &.swiper-button-disabled {
+    pointer-events: none;
+    opacity: 0;
+  }
+}
+
+span.swiper-notification { display: none; }
+
+.control-style {
+  display: flex;
+  align-items: center;
+  max-width: 300px;
+  margin: 0 auto;
+  .swiper-dots {
+    padding: 0 10px;
+    color: #fff;
+    font-size: 28px;
+    min-width: auto;
+    top: -2px;
+  }
+  .gap {
+    position: relative;
+    margin: 0 30px;
+    font-size: 0;
+    &::before {
+      pointer-events: none;
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 0;
+      margin-top: -15px;
+      width: 1px;
+      height: 30px;
+      background-color: #fff;
+      transform: rotate(39deg);
+    }
+  }
+  .swiper-button {
+    margin: 0;
+    border: none;
+    background-color: transparent;
+    &::before, &::after {
+      pointer-events: none;
+      content: "";
+      border: none;
+      transform: none;
+      position: absolute;
+      top: 50%;
+    }
+    &::before {
+      left: 50%;
+      margin: -0.5px 0 0 -10px;
+      width: 20px;
+      height: 1px;
+      background-color: #fff;
+    }
+    &::after {
+      margin-top: -6px;
+      width: 12px;
+      height: 12px;
+      border-top: 1px solid #fff;
+      border-right: 1px solid #fff;
+    }
+    &.swiper-prev {
+      &::after {
+        left: 18px;
+        transform: rotate(-135deg);
+      }
+    }
+    &.swiper-next {
+      &::after {
+        right: 18px;
+        transform: rotate(45deg);
+      }
+    }
+  }
+  &.black {
+    .swiper-dots {
+      color: #333333;
+    }
+    .gap {
+      &::before {
+        background-color: #333;
+      }
+    }
+    .swiper-button {
+      &::after {
+        border-color: #333333;
+      }
+      &::before {
+        background-color: #333333;
+      }
+    }
+  }
+}

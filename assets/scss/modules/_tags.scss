@@ -1,0 +1,44 @@
+@use "sass:math";
+// 變數
+@use "../mixin/variable" as vars;
+// Mixin
+@use "../mixin/mixin";
+
+/* 
+ * Tags
+ */
+.tag {
+  font-style: normal;
+  font-size: min(13px, 0.72em);
+  white-space: nowrap;
+  border-radius: 50px;
+  background-color: #aaa;
+  color: #fff;
+  font-weight: 500;
+  text-align: center;
+  padding: 0.4em 0.8em 0.45em;
+  line-height: 1;
+  text-decoration: none;
+}
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  .cate {
+    padding: 0.35em 0.8em 0.32em;
+  }
+}
+@media (max-width: 579px) {
+  .tag {
+    font-size: min(12px, 0.72em);
+    padding: 0.3em 0.6em 0.35em;
+  }
+  .tags {
+    .cate {
+      padding: 0.25em 0.6em 0.22em;
+    }
+  }
+}
+.color-red {
+  color: red;
+}

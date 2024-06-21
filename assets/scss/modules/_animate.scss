@@ -1,0 +1,25 @@
+@use "sass:math";
+// 變數
+@use "../mixin/variable" as vars;
+// Mixin
+@use "../mixin/mixin";
+
+/* 
+ * 動畫
+ */
+@keyframes ani_fade_in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }  
+}
+// @keyframes ani_loop_jump {
+//   0%, 100% {
+//     margin-top: 0;
+//   }
+//   50% {
+//     margin-top: 5px;
+//   }
+// }

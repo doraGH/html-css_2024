@@ -1,0 +1,235 @@
+@use "sass:math";
+// 變數
+@use "../mixin/variable" as vars;
+// Mixin
+@use "../mixin/mixin";
+
+/*
+ * 下拉分類
+ */
+.tab-dropdown {
+  position: relative;
+  z-index: 20;
+  margin: 0 auto 45px;
+  padding: 0;
+  .tab-dropdown__switch {
+    display: none;
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    font-size: var(--fs-def);
+    font-weight: 500;
+  }
+  .tab-dropdown__list {
+    position: relative;
+    z-index: 1;
+    > ul {
+      white-space: nowrap;
+      list-style: none;
+      margin: 0 auto;
+      padding: 0;
+      width: 100%;
+      text-align: center;
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      gap: 14px;
+      > li {
+        display: inline-block;
+        vertical-align: top;
+        position: relative;
+        > a {
+          position: relative;
+          display: block;
+          text-align: center;
+          min-width: 140px;
+          height: auto;
+          line-height: 1.5;
+          padding: 0.75em;
+          line-height: 1.5;
+          border-radius: 4px;
+          transition: border 0.25s, background-color 0.25s, color 0.25s;
+          color: #555;
+          background-color: rgb(255 255 255);
+          border: 1px solid rgba(0,0,0,0.3);
+          &:focus, &:active {
+            color: #555;
+            background-color: #f2f2f2;
+            border: 1px solid rgba(0,0,0,0.3);
+          }
+        }
+        &.current > a {
+          color: #fff;
+          background-color: var(--color-main);
+          border: 1px solid var(--color-main);
+          &:focus, &:active {
+            color: #fff;
+            background-color: var(--color-main);
+            border: 1px solid var(--color-main);
+          }
+        }
+      }      
+    }
+  }
+}
+// .is-dropdown-active 以及 小尺寸時使用該樣式
+@mixin catetab_mobile_style() {
+  margin-bottom: 25px;
+  .tab-dropdown__switch {
+    z-index: 5;
+    cursor: pointer;
+    display: block;
+    position: relative;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0.3em var(--h-btn) 0.3em 20px;
+    margin: 0;
+    border-radius: 4px;
+    min-height: calc(var(--h-btn) + 0.6em);
+    line-height: var(--h-btn);
+    color: #fff;
+    top: 0;
+    border: none;
+    background-color: var(--color-main);
+    transition: border 0.25s, background-color 0.25s, color 0.25s;
+    &::after {
+      content: '';
+      display: block;
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-style: solid;
+      border-width: 2px 2px 0 0;
+      border-color: #fff;
+      transform: rotate(135deg);
+      right: 15px;
+      top: 50%;
+      margin-top: -5px;
+    }
+    @include mixin.do-under('.pc') {
+      &:hover {
+        color: #fff;
+        background-color: var(--color-main2);
+      }
+    }
+  }
+  .tab-dropdown__list {
+    display: none;
+    z-index: 0;
+    margin: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
+    overflow: hidden;
+    padding: calc(var(--h-btn) + 1em) 3px 3px 3px;
+    border-radius: 4px;
+    background: #fff;
+    box-shadow: 0 5px 5px rgba(0,0,0,0.3) !important;
+    > ul {
+      display: block;
+      padding: 6px;
+      > li {
+        display: block;
+        min-width: auto;
+        padding: 0;
+        margin: 0;
+        border-top: 1px solid #ddd;
+        &:first-child {
+          border-top: none;
+        }
+        > a {
+          border-radius: 0;
+          box-shadow: none;
+          background-color: transparent;
+          border: none!important;
+          display: block;
+          padding: 0.6em 12px;
+          color: #555;
+          text-align: left;
+          min-width: auto;
+          &:active, &:focus {
+            color: #333;
+            background-color: transparent;
+          }
+        }
+        &.current {
+          > a {
+            color: var(--color-main);
+            background-color: transparent;
+            &:active, &:focus {
+              color: var(--color-main);
+              background-color: transparent;
+            }
+          }
+        }
+      }
+    }
+  }
+  &.is-open {
+    .tab-dropdown__list {
+      > ul {
+        > li:not(.current) > a:hover {
+          color: #333;
+          background-color: #f5f5f5;
+        }
+        > li.current > a:hover {
+          color: var(--color-main);
+          background-color: #f5f5f5;
+        }
+      }
+    }
+    .tab-dropdown__switch {
+      margin: 3px;
+      top: 3px;
+      color: #fff;
+      background-color: var(--color-main2);
+      &::before, &::after {
+        filter: brightness(0) invert(1)
+      }
+      &::after {
+        transform: rotate(-45deg);
+        margin-top: -3px;
+      }
+      @include mixin.do-under('.pc') {
+        &:hover {
+          color: #fff;
+          background-color: var(--color-main2);
+        }
+      }
+    }
+  }
+}
+@media (min-width:768px) {
+  .tab-dropdown {
+    &.is-dropdown-active {
+      @include catetab_mobile_style();
+    }
+    &:not(.is-dropdown-active) {
+      .tab-dropdown__list {
+        display: block!important;
+        > ul {
+          display: flex!important;
+          @include mixin.do-under('.pc') {
+            > li:not(.current):hover > a, > li:not(.current) > a:hover {
+              color: #555;
+              background-color: #eee;
+              border: 1px solid rgba(0,0,0,0.3);
+            }
+            > li.current:hover > a, > li.current > a:hover {
+              color: #fff;
+              border-color: var(--color-main);
+              background-color: var(--color-main);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+@media (max-width:767px) {
+  .tab-dropdown {
+    @include catetab_mobile_style();
+  }
+}

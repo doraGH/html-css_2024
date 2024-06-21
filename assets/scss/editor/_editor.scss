@@ -1,0 +1,222 @@
+@use "sass:math";
+// 變數
+@use "../mixin/variable" as vars;
+// Mixin
+@use "../mixin/mixin";
+
+/* 
+ * 基本樣式
+ */
+.editor-wrap {
+  padding-top: var(--gap-v-sm);
+  padding-bottom: var(--gap-v-sm);
+  p {
+    margin: 0 0 2em 0;
+  }
+}
+// 特殊色
+.theme-color-highlight {
+  color: var(--color-second2)!important;
+}
+// 引言樣式
+.theme-quote {
+  color: #444;
+  display: block;
+  padding: 0 0 0 1em;
+  margin: 15px 0;
+  border-left: 6px solid rgb(0 0 0 / 20%);
+  padding-left: 15px;
+  color: #666;
+  font-size: calc(var(--fs-def) * 0.888);
+}
+// 大標題
+.theme-h1 {
+  color: #000;
+  font-size: var(--fs-h1);
+  display: block;
+  font-weight: 500;
+  line-height: 1.5;
+  display: block;
+  margin: 0 0 15px;
+  padding: 0;
+  font-family: var(--ff-en);
+}
+// 次標題
+.theme-h2 {
+  color: #000;
+  font-size: var(--fs-h2);
+  font-weight: 500;
+  display: block;
+  line-height: 1.8;
+  margin: 0 0 15px;
+  padding: 0;
+  font-family: var(--ff-en);
+}
+// 次標題
+.theme-h3 {
+  color: #000;
+  font-size: var(--fs-h3);
+  font-weight: 500;
+  display: block;
+  line-height: 1.8;
+  margin: 0 0 15px;
+  padding: 0;
+  font-family: var(--ff-en);
+}
+// 底線標題
+.theme-title-underline {
+  border-bottom: 1px solid rgb(0 0 0 / 60%);
+  margin-bottom: 0;
+}
+// 裝飾線標題
+.theme-title-deco {
+  color: #000;
+  line-height: 1.2;
+  font-size: var(--fs-h4);
+  font-family: var(--ff-en);
+  font-weight: 500;
+  margin: 0.5em 0;
+  padding: 0;
+  span {
+    font: inherit;
+    background: linear-gradient(to right, rgb(31 172 121 / 0.2) 0%, rgb(31 172 121 / 0.2) 100%);
+    background-size: 100% 10px;
+    background-repeat: no-repeat;
+    background-position: left 95%;
+  }
+}
+// 特殊點點列表
+.theme-list-dot {
+  list-style: none;
+  padding: 0;
+  margin: 0.25em 0 1em;
+  > li {
+    display: block;
+    position: relative;
+    padding-left: 30px;
+    margin: 0.5em 0;
+    &::before {
+      content: '';
+      display: block;
+      width: 10px;
+      height: 10px;
+      border-radius: 15px;
+      position: absolute;
+      top: 0.75em;
+      left: 0.5em;
+      background-color: var(--color-second);
+    }
+  }
+}
+// 圖片置中(容器會較小)
+.theme-img-center {
+  display: block;
+  width: 100%;
+  max-width: calc(1120px + var(--gap) * 2);
+  margin: var(--gap-v-sm) auto;
+  text-align: center;
+  .img {
+    margin-bottom: 25px;
+  }
+  .text {
+    background-color: #f1f1f1; 
+    padding: var(--gap) var(--gap-item);
+    text-align: left;
+  }
+}
+// 壓底色文字區塊
+.theme-text-with-bg {
+  background-color: #f1f1f1; 
+  padding: var(--gap) var(--gap-item);
+  text-align: left;
+}
+// 課程表格
+.theme-table-two-col {
+  border-collapse: collapse;
+  border: none;
+  width: 100%;
+  margin: 0 auto var(--gap-v-sm);
+  th {
+    font-weight: 500;
+  }
+  td, th {
+    padding: 12px 1.5em;
+    text-align: left;
+    line-height: 1.5;
+  }
+  tr {
+    th, td {
+      border-bottom: 1px solid rgb(0 0 0 / 10%)
+    }
+  }
+  thead {
+    background-color: var(--color-second2);
+    color: #fff;
+    td, th {
+      white-space: nowrap;
+      padding-top: 15px;
+      padding-bottom: 15px;
+    }
+  }
+  tbody {
+    tr {
+      @include mixin.do-under('.pc') {
+        &:hover {
+          background-color: #f2f2f2;
+        }
+      }
+    }
+  }
+}
+// 左圖右文
+.theme-l-img-r-text {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .text {
+    flex: 1 1 60%;
+    padding-left: var(--gap-v-sm);
+  }
+  .img {
+    flex: 0 1 40%;
+  }
+}
+// 右圖左文
+.theme-r-img-l-text {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row-reverse;
+  .text {
+    flex: 1 1 60%;
+    padding-right: var(--gap-v-sm);
+  }
+  .img {
+    flex: 0 1 40%;
+  }
+}
+// 多欄排列 (預設兩欄)
+.theme-columns {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  align-content: flex-start;
+  justify-content: flex-start;
+  gap: var(--gap-item);
+  > *  {
+    flex: 1 0 calc(50% - var(--gap-item));
+    img {
+      display: block;
+      margin: 0 auto;
+    }
+  }
+  .img {
+    margin-bottom: 20px;
+  }
+  // 三欄
+  &.col-3 {
+    > * {
+      flex: 1 0 calc(100% / 3 - var(--gap-item));
+    }
+  }
+}

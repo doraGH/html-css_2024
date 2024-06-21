@@ -1,0 +1,418 @@
+@use "sass:math";
+@use "sass:color";
+// 變數
+@use "../mixin/variable" as vars;
+// Mixin
+@use "../mixin/mixin";
+
+/* 
+ * Header
+ */
+.header {
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  right: 0;
+  transition: all 0.35s ease;
+  background-color: #fff;
+  box-shadow: 0 3px 6px rgb(0 0 0 / 5%);
+  height: var(--h-header);
+  display: flex;  
+  align-items: center;
+  .w-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0 1rem;
+  }
+}
+.nav-brand {
+  display: flex;
+  margin: 1rem;
+  width: auto;
+  height: 30px;
+  gap: 1rem;
+  span {
+    display: flex;
+    align-items: center;
+  }
+}
+
+/* 其他選單 qlink */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0 1rem;
+  margin-left: 1rem;
+  > li {
+    position: relative;
+    > a,
+    .dropdownToggle a {  //.dropdownToggle a ,如果要改用點擊事件時,中間新增一個dropdownToggle
+      display: flex;
+      align-items: center;
+      gap: 0 0.5rem;
+      padding: 1rem;
+      white-space: nowrap;
+      color: vars.$color-default;
+      line-height: 1;
+      transition: color 0.25s;
+    }
+  }
+  .language, .language-clicked {
+    > ul {
+      display: none;
+      // opacity: 0;
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      // width: 80px;      
+      transition: .2s ease-in-out;
+      border: 1px solid #eee;
+      border-radius: .25rem;
+      background-color: #fff;
+      li {
+        border-bottom: 1px solid rgba(#000, 0.1);
+        &:last-child {
+          border-bottom: none;
+        }
+        a {
+          display: block;
+          padding: 0.25rem 1.2rem;
+          color: #666;
+          background-color: #fff;
+          transition: background-color 0.2s;
+          &.current, &:hover {
+            background-color: rgba(#000, 0.08);
+          }
+        }
+        &:first-child {
+          border-radius: .25rem .25rem 0 0;
+        }
+        &:last-child {
+          border-radius: 0 0 .25rem .25rem;
+        }
+      }
+    }
+  }
+  // 點擊方法class + 搭配 javascript
+  .language-clicked {
+    &.is-open {
+      .dropdownToggle a {
+        color: var(--color-primary);
+      }
+      > ul {
+        display: block;
+      }
+    }
+  }
+  .search {
+    background-color: transparent;
+    border-radius: 50%;  
+    transition: background-color 0.25s;  
+  }
+}
+
+.search-switch.is-open,
+.pc .search-switch:hover  {
+  svg {
+    color: var(--color-primary);
+  }  
+}
+.search-box {
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: calc(var(--h-header) + 30px);
+  left: 0;
+  transform: translateY(-100%);
+  background-color: #fff;
+  transition: transform 0.35s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &.is-open {
+    transform: translateY(0%);
+  }
+}
+.search-group {
+  display: flex;
+  align-items: stretch;
+  width: 800px;
+  max-width: calc(100% - 70px);
+  .search-label {
+    position: relative;
+    flex: 1 1 auto;
+    svg {
+      position: absolute;
+      top: 50%;
+      left: 20px;
+      transform: translateY(-50%);
+      z-index: 1;
+    }
+  }
+  .search-input {
+    width: 100%;
+    min-width: 0;
+    border: 1px solid var(--color-primary);
+    border-radius: 0.25rem;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    padding: 0.5rem 1rem 0.5rem 3rem;
+    outline: 0;
+  }
+  .search-send {
+    cursor: pointer;
+    border: none;
+    border-radius: 0.25rem;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    background-color: var(--color-primary);
+    color: #fff;
+    padding: 0.25rem 3rem;
+  }
+}
+.search-close {
+  width: 40px;
+  height: 40px;
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  svg {
+    transform: scale(1.3);    
+  }
+}
+@media (min-width: 767px) {
+  .nav-links {
+    > li {
+      &:hover {
+        > a {
+          color: var(--color-primary);
+        }
+      }
+    }
+    .language {
+      &:hover {
+        ul {
+          display: block;
+          opacity: 1;
+          animation: ani_fade_in 0.25s both;
+        }
+      }
+    }
+    .search {
+      &:hover {
+        background-color: #ff7a7a;
+        > a {
+          color: #fff;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 766px) {
+  .nav-links {
+    margin-left: auto;
+  }
+  .lang-switch.is-open {
+    > ul {
+      display: block;
+      opacity: 1;
+    }
+  }
+}
+
+
+/* 選單按鈕 */
+.nav-switch {
+  display: none;
+  width: 50px;
+  height: 50px;
+  margin: 0.5rem;
+  span {
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 30px;
+    height: 2px;
+    background-color: var(--color-primary); // color setting
+    transform: translate(-50%, -50%) rotate(0);
+    transform-origin: center;
+    transition: margin 0.35s 0.3s, transform 0.35s;
+    &:nth-child(1) { margin-top: -15%;}
+    &:nth-child(2) { transition: opacity 0.35s;}
+    &:nth-child(3) { margin-top: 15%;}
+  }
+  &.is-open span {
+    &:nth-child(1) {
+      margin-top: 0;
+      transform: translate(-50%, -50%) rotate(45deg);
+      transition: margin 0.35s, transform 0.35s 0.3s;
+    }
+    &:nth-child(2) {
+      opacity: 0;
+    }
+    &:nth-child(3) {
+      margin-top: 0;
+      transform: translate(-50%, -50%) rotate(-45deg);
+      transition: margin 0.35s, transform 0.35s 0.3s;
+    }
+  }
+}
+@media (max-width: 766px) {
+  .nav-switch {
+    display: block;
+  }
+}
+
+/* menu 主選單 */
+.navbar {
+  display: flex;
+}
+.menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;  
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0 var(--gap);
+  > li {
+    position: relative;
+    padding: 1rem 0;
+    > a {
+      white-space: nowrap;
+      font-size: var(--fs-def);
+      color: #000;
+      padding: 1rem;
+    }
+    > ul {
+      display: none;
+      opacity: 0;
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      min-width: 180px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(#000, 0.2);
+      border-top: 2px solid var(--color-primary);      
+      li {
+        border-bottom: 1px solid rgba(#000, 0.2);
+        &:last-child {
+          border-bottom: none;
+        }
+        a {
+          display: block;
+          padding: 0.5rem 1.2rem;
+          color: #666;
+          background-color: #fff;
+          transition: background-color 0.2s;
+          &.current {
+            background-color: var(--color-primary);
+          }
+        }
+      }
+    }
+  }
+}
+// .pc .menu {
+//   > li {
+//     &:hover {
+//       > a {
+//         color: var(--color-primary);
+//       }
+//       > ul {
+//         display: block;
+//         opacity: 1;        
+//       }
+//     }
+//   }
+// }
+
+@media  (min-width: 767px) {
+  .navbar {
+    margin-left: auto;
+  }
+  .menu {
+    > li {
+      padding: 1rem 0;
+      &:hover {
+        > a {
+          color: var(--color-primary);
+        }
+        > ul {
+          // display: block;
+          pointer-events: auto;
+          opacity: 1;
+          top: 100%;
+        }
+      }
+      > ul {
+        position: absolute;
+        top: calc(100% + 1rem);
+        left: 50%;
+        transform: translateX(-50%);
+        min-width: 180px;
+        box-shadow: 0 0 10px rgba(#000, 0.2);
+        border-top: 2px solid var(--color-primary);
+        li:hover a {
+          color: #fff;
+          background-color: var(--color-primary);
+        }
+      }      
+    }
+  }
+}
+
+@media  (max-width: 766px) {
+  .navbar {
+    display: none;
+    top: var(--h-header);
+    left: 0;
+    right: 0;
+    height: calc(100% - var(--h-header));
+    position: fixed;
+    transform: none;
+    background-color: rgb(0 0 0 / 0.2);
+  }
+  .menu {
+    gap: 0;
+    flex-wrap: wrap;
+    > li {
+      width: 100%;
+      background-color: var(--color-primary);
+      border-bottom: 1px solid rgba(#fff,0.2);
+      > a {
+        display: block;
+        padding: 0.75rem var(--gap);
+        text-align: center;
+        color: #fff;
+      }
+      > ul {
+        position: relative;
+        display: none;
+      }
+    }
+  }
+  .is-open-nav {
+    .navbar {
+      display: block;
+      animation: ani_fade_in 0.25s both;
+    }
+    .menu {
+      > li.is-open {
+        > ul {
+          pointer-events: auto;
+          display: block;
+          opacity: 1;
+        }
+      }
+    }
+  }
+}

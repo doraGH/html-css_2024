@@ -1,0 +1,92 @@
+@use "sass:math";
+@use "sass:color";
+// 變數
+@use "../mixin/variable" as vars;
+// Mixin
+@use "../mixin/mixin";
+
+/* ==== RESET ==== */
+html {
+  font-size: 10px;
+  line-height: 10px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: vars.$font-family-default;
+  font-size: vars.$size-default;
+  color: vars.$color-default;
+  word-wrap: break-word;
+  line-height: var(--line-height-default);
+  background-color: vars.$color-bg-default;
+  overflow-x: hidden !important;
+}
+
+* {
+  backface-visibility: hidden;
+  box-sizing: border-box;
+}
+
+a {
+  color: vars.$color-default;
+  outline: none;
+  transition: all .35s ease-in-out;
+  &:hover {
+    color: var(--color-primary);
+  }
+}
+a {
+  text-decoration: none;
+  &:visited, &:hover, &:focus, &:active {
+    text-decoration: none;
+  }
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  li {
+    margin: 0;
+  }
+}
+ol {
+  list-style: decimal;
+  padding: 0 0 0 1em;
+  margin: 0;
+  li {
+    margin: 0;
+  }
+}
+img, picture, svg, video, canvas{
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle; 
+  font-style: italic;
+  background-repeat: no-repeat; 
+  background-size: cover;
+}
+img {
+  object-position: center;
+  object-fit: cover;
+}
+input, button, textarea, select{
+  font: inherit;
+}
+// ::-webkit-input-placeholder {
+//   color: #aaa;
+//   font-size: calc(var(--fsize-default) * 0.88);
+//   opacity: 1
+// }
+// ::-moz-placeholder {
+//   color: #aaa;
+//   font-size: calc(var(--fsize-default) * 0.88);
+//   opacity: 1
+// }
+// :-ms-input-placeholder,
+// :-moz-placeholder {
+//   color: #aaa;
+//   font-size: calc(var(--fsize-default) * 0.88);
+//   opacity: 1
+// }

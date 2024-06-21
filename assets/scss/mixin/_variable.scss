@@ -1,0 +1,75 @@
+/* ==== 宣告 全域設定 ==== */
+// 全域預設
+$font-family-default: 'Noto Sans TC', 'Microsoft JhengHei UI','Microsoft JhengHei', sans-serif;
+$size-default: 1.6rem;
+$color-default: #444444;
+$color-bg-default: #ffffff;
+
+:root{
+  --line-height-default: 2;
+  
+  // 網站色系 
+  --color-primary: #1FAC79;
+  --color-secondary: #0aa073;
+
+  // 字型大小
+  --fsize-default: 16px; // 預設
+  --fs-subhead: clamp(1.388em, 1.57vw, 1.66em);
+  --fz-h1: clamp(1.625rem, 2.5vw, 2rem);
+  --fz-h2: clamp(1.4125rem, 2.5vw, 1.875rem);
+  --fz-h3: clamp(1.375rem, 2.5vw, 1.625rem);
+  --fz-h4: clamp(1.25rem, 2.5vw, 1.5rem);
+  --fz-h5: clamp(1.1875rem, 2vw, 1.4125rem);
+  --fz-h6: clamp(1.125rem, 1.8vw, 1.375rem);
+  --fz-sm: 0.9375em;
+
+  // ===========  
+  // container 容器尺寸框架
+  // 主容器寬
+  --w-container: 1420px;
+  --w-container-lg: 1740px;
+
+  // 按鈕高
+  --h-btn: 48px;
+  // --h-btn-lg: 54px;
+
+  // Header
+  --h-header: 90px;
+
+
+  // =========== 
+  // 間距
+  // ===========
+  --gap: 25px;
+
+
+  // ===========
+  // 影音plyr套件 顏色 與 play控制器間距
+  // ===========
+  // --plyr-control-spacing: 10px;
+  // --plyr-color-main: #d0b573;
+
+
+  // ===========
+  // 圓角
+  // ===========
+  
+  // Button
+  // --button-radius: 50px;
+
+}
+
+// (max-width 由大到小-電腦優先) (min-width 由小到大-手機優先)
+// @media  (max-width: 767px) {
+//   :root{
+    
+//     // Header
+//     --h-header: 65px;
+//     .is-fixed-header {
+//       --h-header: 65px;
+//       #i-kanban {
+//         --h-header: 65px;
+//       }
+//     }
+//   }
+// }

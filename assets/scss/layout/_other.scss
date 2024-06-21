@@ -1,0 +1,50 @@
+@use "sass:math";
+// 變數
+@use "../mixin/variable" as vars;
+// Mixin
+@use "../mixin/mixin";
+
+/* 
+ * 架構其他共用部分
+ */
+.gotop {
+  position: fixed;
+  right: var(--gap);
+  bottom: var(--gap);
+  opacity: 0;
+  z-index: 150;
+  cursor: pointer;
+  color: #fff;
+  background-color: #1FAC79;
+  width: 46px;
+  aspect-ratio: 1;
+  border-radius: 50px;
+  display: flex;
+  font-size: 0;
+  align-items: center;
+  justify-content: center;
+  transform: scale(0) translateY(25px);
+  transition: transform 0.35s, opacity 0.35s;
+  svg {
+    width: 100%;
+    max-width: 30px;
+  }
+  &.is-show { 
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.pc .gotop {
+  &:hover { 
+    color: #fff;
+    background-color: #23cc8e;
+    transform: translateY(-5px);
+  }
+}
+.mb .gotop {
+  &:active { 
+    color: #fff;
+    background-color: #23cc8e;
+    transform: translateY(-5px);
+  }
+}
