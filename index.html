@@ -19,6 +19,19 @@
         <ul class="menu">
           <li>
             <a href="#" title="關於本區">關於本區</a>
+            <ul class="menu-second reset">
+              <li><a href="product_catalog.php" title="帶入名稱">Deadbolts</a></li>
+              <li><a href="product_catalog.php" title="帶入名稱">Knobs</a></li>
+              <li><a href="product_catalog.php" title="帶入名稱">Handlesets</a></li>
+              <li><a href="product_catalog.php" title="帶入名稱">Levers</a></li>
+              <li><a href="product_catalog.php" title="帶入名稱">Electronic</a></li>
+              <li><a href="product_catalog.php" title="帶入名稱">Secruity Sets</a></li>
+              <li><a href="product_catalog.php" title="帶入名稱">Light Commerical</a></li>
+              <li><a href="product_catalog.php" title="帶入名稱">Parts & Accessories</a></li>
+            </ul>
+          </li>
+          <li>
+            <a href="#" title="關於本區">關於本區</a>
           </li>
           <li>
             <a href="#" title="最新消息">最新消息</a>
@@ -75,43 +88,31 @@
   <!-- search popup -->
   <div class="search-box">
     <div class="wrap">
-      <div class="operate-btn"><span></span></div>
-      <form action="product_search.php" method="post">
+      <form action="#" method="post" class="search-form">
         <input type="text" name="search-keyword" id="search-keyword" placeholder="Enter keywords" value="" class="input-style">
-        <button type="search" value="" class="btn-search"><i></i></button>
+        <button type="search" value="" class="search-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-search" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg>
+        </button>
       </form>
+      <a class="search-close" href="#" title="關閉搜尋">
+        <span class="sr-only">關閉搜尋</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1FAC79" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg>
+      </a>
     </div>
   </div>
 
-  <!-- <div class="search-popup" :class="{'is-open': searchOpen}">
-    <form action="SearchResult.html" name="form_search" class="search-group">
-      <label for="search_keyword" class="search-label">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-search" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg>
-        <input type="search" name="search_keyword" class="search-input"
-        autocomplete="off" placeholder="搜尋關鍵字..." />
-      </label>
-
-      <button type="submit" class="search-send" title="開始搜尋">
-        Search
-      </button>
-    </form>
-    <a class="search-close" href="#" title="關閉搜尋"
-    @click.prevent="searchOpen = !searchOpen">
-      <span class="sr-only">關閉搜尋</span>
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1FAC79" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg>
-    </a>
-  </div> -->
-
-
   <script>
     const $win = window;
+    let winW = $win.innerWidth,
+        winH = $win.innerHeight;
+
+    const $header = document.querySelector('.header');
     const $navSwitch = document.querySelector(".nav-switch");
     const $lang = document.querySelector(".dropdownToggle").parentElement;
     const $language = document.querySelector(".language");
     const $searchSwitch = document.querySelector(".search-switch");
-    const $searchBox = document.querySelector(".search-box");
-    let winW = $win.innerWidth,
-        winH = $win.innerHeight;
+    const $searchBox = document.querySelector(".search-box");    
+    const $menu = document.querySelector(".menu");   
 
     $win.addEventListener("click", function(){
       winW = $win.innerWidth;
@@ -129,6 +130,7 @@
         $searchBox.classList.remove("is-open");
       } else {
         $lang.classList.remove("is-open");
+        $searchBox.classList.remove("is-open");
       }
     });
     document.querySelectorAll(".language-clicked ul li a").forEach(function(anchor) {
@@ -150,18 +152,28 @@
           $searchBox.classList.remove("is-open");
         } else {
           $language.classList.remove("is-open");
+          $searchBox.classList.remove("is-open");
         }
       }
     });
 
     // searchBox
-    $searchSwitch.addEventListener("click", function() {
-      console.log("OK");
+    $searchSwitch.addEventListener("click", function(event) {      
       if(!$searchBox.classList.contains("is-open")) {
         $searchBox.classList.add("is-open");
-        // $language.classList.remove("is-open");
+        $lang.classList.remove("is-open");
+        $language.classList.remove("is-open");
+        $header.classList.remove("is-open-nav");
+        $navSwitch.classList.remove("is-open");
+      
+        const $searchClose = $searchBox.querySelector(".wrap .search-close");
+        $searchClose.addEventListener("click", function() {
+          $searchBox.classList.remove("is-open");
+        }, { once: true }); // 只綁定一次，避免重複綁定導致的多次觸發
       } else {
         $searchBox.classList.remove("is-open");
+        $lang.classList.remove("is-open");
+        $language.classList.remove("is-open");
       }
     });
 
@@ -169,14 +181,21 @@
     $navSwitch.addEventListener("click", function() {
       if($navSwitch.classList.contains("is-open")) {
         $navSwitch.classList.remove("is-open");  
+        $header.classList.remove("is-open-nav");
         $lang.classList.remove("is-open");
         $language.classList.remove("is-open");
+        $searchBox.classList.remove("is-open");
       } else {
         $navSwitch.classList.add("is-open");
+        $header.classList.add("is-open-nav");
         $lang.classList.remove("is-open");
         $language.classList.remove("is-open");
+        $searchBox.classList.remove("is-open");
       }
     });
+
+    // 選單點擊開合
+    
 
 
     
