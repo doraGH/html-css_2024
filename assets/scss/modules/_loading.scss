@@ -1,0 +1,83 @@
+@use "sass:math";
+@use "sass:color";
+// 變數
+@use "../mixin/variable" as vars;
+// Mixin
+@use "../mixin/mixin";
+
+/* 
+ * 頁面 Loading
+ */
+.loading-animation {
+  display: flex;
+  pointer-events: none;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: rgb(255 255 255 / 10%) url(../images/white_open.png) no-repeat 0 0 / cover;
+  opacity: 1;
+}
+.loading-animation.js-loaded {
+  opacity: 0;
+  animation: ani_loading_page 1.5s both;
+}
+
+@keyframes ani_loading_page {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+
+/* 
+ * 區塊 Loading
+ */
+.loader {
+  width: 8px;
+  height: 40px;
+  border-radius: 4px;
+  display: block;
+  margin: 20px auto;
+  background: currentColor;
+  color: rgb(209 188 164 / 80%);
+  box-sizing: border-box;
+  animation: animloader 0.3s 0.3s linear infinite alternate;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50% -50%);
+}
+.loader::after, .loader::before {
+  content: '';
+  width: 8px;
+  height: 40px;
+  border-radius: 4px;
+  background: currentColor;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 20px;
+  box-sizing: border-box;
+  animation: animloader 0.3s  0.45s  linear infinite alternate;
+}
+.loader::before {
+  left: -20px;
+  animation-delay: 0s;
+}
+.swiper-initialized .loader {
+  display: none;
+  animation: ani_fade_out 0.35s both;
+}
+
+@keyframes animloader {
+  0%   { height: 48px} 
+  100% { height: 4px}
+}

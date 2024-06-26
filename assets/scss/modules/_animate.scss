@@ -4,9 +4,15 @@
 // Mixin
 @use "../mixin/mixin";
 
-/* 
- * 動畫
- */
+//首頁
+@keyframes ani_kanban_in {
+  from {
+    -webkit-transform: scale(1.1);
+            transform: scale(1.1);
+  }
+}
+
+// 動畫
 @keyframes ani_fade_in {
   0% {
     opacity: 0;
@@ -14,6 +20,14 @@
   100% {
     opacity: 1;
   }  
+}
+@keyframes ani_fade_out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 // @keyframes ani_loop_jump {
 //   0%, 100% {

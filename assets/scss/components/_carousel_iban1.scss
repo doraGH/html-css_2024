@@ -1,0 +1,389 @@
+@use "sass:math";
+@use "sass:color";
+// 變數
+// @use "../mixin/variable" as vars;
+:root{
+  // 字型
+  --ff-serif: 'Noto Serif TC', 'PMingLiU', sans-serif;
+  // 間距
+  --gap: 25px;
+  // 文字尺寸
+  --fs-head-title: clamp(1.66rem, 2.44vw, 2.5rem);//標題 30 - 45
+  --fs-list-title: clamp(1.38rem, 2.183vw, 2.22rem);//列表標題 25 - 40
+  // 顏色
+  --kanban-button: red;
+
+  // Plyr預設顏色, 設定會自動抓取 plyr.css 裡的參數做對應
+  --plyr-control-spacing: 20px;
+  --plyr-color-main: #e6a351;
+
+}
+
+
+
+/*
+ * 輪播 - 橫幅
+ */
+// js/modules/iban1.js
+
+.scrolldown {
+  cursor: pointer;
+  position: absolute;
+  width: 35px;
+  height: 48px;
+  bottom: 50px;
+  left: 50%;
+  margin-left: -17px;
+  z-index: 50;
+  border-radius: 24px;
+  border: 2px solid #fff;
+  &::before {
+    position: absolute;
+    content: '';
+    width: 5px;
+    height: 5px;
+    left: 50%;
+    top: 10px;
+    margin-left: -2px;
+    background: #fff;
+    border-radius: 50%;
+    animation: up-down 1.5s linear infinite;
+  }
+}
+@keyframes up-down {
+  0% {
+    top: 12px;
+  }
+  24% {
+    top: 18px;
+  }
+  50% {
+    top: 30px;
+  }
+  74% {
+    top: 18px;
+  }
+  100% {
+    top: 12px;
+  }
+}
+
+
+.c-kanban {
+  background: #000;
+  &.hide-deco-text {
+    .c-kanban__text {
+      opacity: 0!important;
+      pointer-events: none;
+      animation: ani_fade_out 0.35s both;
+    }
+  }
+  &.carousel {
+    position: relative;
+    margin: 0 auto;
+    overflow: hidden;
+    &:not(.swiper-initialized) {
+      background: #000;
+      .swiper-slide {
+        opacity: 0;
+      }
+    }
+    &.swiper-initialized {
+      .c-kanban__text {
+        opacity: 1;
+        animation: ani_fade_in 1s 0.2s both;
+      }
+    }
+    .swiper-slide-active {
+      .c-kanban__media {
+        animation: ani_kanban_in 1s both;
+      }
+      .c-kanban__text {
+        &::after {
+          animation: ani_kanban_in_text_deco 0.5s 0.7s both;
+        }  
+        > * {  
+          @for $i from 1 through 3 {
+            &:nth-child(#{$i}) {
+              .char {
+                animation: ani_kanban_in_text 0.8s ease-in-out $i * 0.3s both;  
+              }    
+            }
+          }
+        }
+      }
+    }
+    .swiper-button-prev, .swiper-button-next {
+      display: none!important;  // 強制隱藏按鈕
+      color: var(--kanban-button);;
+      position: absolute;
+      z-index: 15;
+      &:after, &:after { 
+        font-size: 2.5rem; 
+      }
+    }
+    .swiper-button-prev { left: 25px; }
+    .swiper-button-next { right: 25px; }
+    .swiper-pagination {
+      z-index: 15;
+      position: absolute;
+      right: max(20px, 4.5vw);
+      left: auto;
+      top: 50%;
+      width: 20px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      transform: translateY(-50%);
+    }
+    .swiper-pagination-bullet {
+      display: block;
+      margin: 7px auto;
+      width: 10px;
+      height: 10px;
+      opacity: 1;
+      border-radius: 8px;
+      transition: background-color .5s;
+      background-color: transparent;
+      border: 1px solid #fff;
+    }
+    .swiper-pagination-bullet-active {
+      background: #fff;
+    }
+    .swiper-horizontal > .swiper-pagination-bullets,
+    .swiper-pagination-bullets.swiper-pagination-horizontal,
+    .swiper-pagination-custom, .swiper-pagination-fraction {
+      bottom: 35px;
+    }
+  }
+  &__list {
+    z-index: 2;
+    width: 100%;
+    line-height: 0;
+    aspect-ratio: 1920 / 975;
+    min-height: 80vh;
+    a {
+      display: block;
+      line-height: 0;
+    }
+  }
+  &__media {
+    display: block;
+    position: relative;
+    width: 100%;
+    z-index: 1;
+    will-change: transform;
+    overflow: hidden;
+    &::before {
+      content: '';
+      display: block;
+      aspect-ratio: 1920 / 975;
+      min-height: 80vh;
+    }
+    img, picture {
+      z-index: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      height: 100% !important;
+      width: 100% !important;
+      max-width: none !important;
+      transform: translate(-50%, -50%);
+      object-fit: cover;
+      object-position: center center;
+    }
+    .plyr--video {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      bottom: 0;
+      left: 0;
+      z-index: 5;
+    }
+    .plyr__video-wrapper {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      width: 100% !important;
+      padding-bottom: 56.25%;
+      object-fit: cover;
+      object-position: center center;
+    }
+  }
+  // 單一共用標題
+  &__text {
+    z-index: 15;
+    position: absolute;
+    color: #f5eee5;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    top: 50%;
+    left: 50%;
+    padding-left: 0.8em;
+    transform: translate(-50%, -50%);
+    text-shadow: 0 0 20px rgb(0 0 0 / 30%);
+    font-family: var(--ff-serif);
+    opacity: 0;
+    .bedge {
+      width: max(100px, 8.3vw);
+      margin: 0 auto var(--gap) auto;
+      transform: translateX(4%);
+    }
+    .text-gp {
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1.8;
+      > * {
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+      }
+      .zh {
+        font-size: clamp(1.66rem, 2.54vw, 2.611rem);
+        font-weight: 500;
+        letter-spacing: 0.31em;
+        order: 2;
+        &::before, &::after {
+          content: '';
+          display: block;
+          position: absolute;
+          width: 1px;
+          height: 100%;
+          background-color: rgb(255 255 255 / 50%);
+        }
+        &::before {
+          top: 0;
+          left: 0;
+        }
+        &::after {
+          bottom: 0;
+          right: 0;
+        }
+      }
+      .en {
+        order: 1;
+        font-size: 1rem;
+        letter-spacing: 0.31em;
+      }
+      .jp {
+        order: 3;
+        font-size: clamp(1.22rem, 1.506vw, 1.5rem);
+        letter-spacing: 0.27em;
+      }
+    }
+  }
+}
+
+@media (min-aspect-ratio: 16/9) {
+  .plyr--video, iframe {
+    /* height = 100 * (9 / 16) = 56.25 */
+    height: 56.25vw;
+  }
+}
+@media (max-aspect-ratio: 16/9) {
+  .plyr--video, iframe {
+    /* width = 100 / (9 / 16) = 177.777777 */
+    width: 177.78vh;
+  }
+}
+
+//內頁
+.c-kanban {
+  &.page {
+    &.carousel {
+      .swiper-slide-active {
+        .c-kanban__media {
+          animation: ani_kanban_in 1s both;
+        }
+      }
+    }
+    .c-kanban__list {
+      aspect-ratio: 1920 / 650;
+      min-height: 240px;
+    }
+    .c-kanban__media {
+      &::before { 
+        aspect-ratio: 1920 / 650;
+        min-height: 240px;
+      }
+    }
+    .c-kanban__text {
+      padding-bottom: 1.1em;
+      &::after {
+        left: 50%;
+        width: calc(var(--fs-head-title) * 1.66);
+        margin-left: calc(var(--fs-head-title) * -0.833);
+      }
+    }
+    .c-kanban__title {
+      display: block;
+      margin: 0 auto;
+      text-align: center;
+      font-weight: 500;
+      font-size: var(--fs-head-title);
+    }
+    .c-kanban__subtitle {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+      font-size: var(--fs-list-title);
+      margin: 0 auto 0.5em;
+    }
+  }
+}
+
+@media (max-width: 839px) {
+  .c-kanban {
+    .scrolldown {
+      bottom: 5px;
+      filter: brightness(30%) invert(1);
+    }
+    &.carousel {
+      .swiper {
+        &-button-prev { left: 10px; }
+        &-button-next { right: 10px; }
+        &-button-prev, &-button-next {
+          color: var(--kanban-button);
+          &:after, &:after { font-size: 1.5rem; }
+        }
+      }
+    }
+    &__list {
+      aspect-ratio:  900 / 975;
+    }
+    &__media {
+      &::before {
+        aspect-ratio: 900 / 975;
+      }
+    }
+    &__text {
+      .text-gp {
+        .zh {
+          font-size: 1.33rem;
+        }
+        .jp {
+          font-size: 0.99rem;
+        }
+        .en {
+          font-size: 0.66rem;
+        }
+      }
+    }
+  }
+  //內頁
+  .c-kanban {
+    &.page {
+      &.carousel {aspect-ratio: 1000 / 500; }
+      .c-kanban__media {
+        &::before { padding-bottom: 50%; }
+      }
+    }
+  }
+}
